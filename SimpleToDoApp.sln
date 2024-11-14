@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleToDoAppAPI", "SimpleToDoAppAPI\SimpleToDoAppAPI.csproj", "{1B80E75C-81F7-46AD-90E0-6B60E9A5A796}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleToDoAppWebMVC", "SimpleToDoAppWebMVC\SimpleToDoAppWebMVC.csproj", "{0B66640B-3CDF-40CB-B129-E5A1B4D0AA3B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1B80E75C-81F7-46AD-90E0-6B60E9A5A796}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B80E75C-81F7-46AD-90E0-6B60E9A5A796}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B80E75C-81F7-46AD-90E0-6B60E9A5A796}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B80E75C-81F7-46AD-90E0-6B60E9A5A796}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B66640B-3CDF-40CB-B129-E5A1B4D0AA3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B66640B-3CDF-40CB-B129-E5A1B4D0AA3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B66640B-3CDF-40CB-B129-E5A1B4D0AA3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B66640B-3CDF-40CB-B129-E5A1B4D0AA3B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AD9BC766-5A38-4917-8DBB-BEE86FE9BBB2}
+	EndGlobalSection
+EndGlobal
