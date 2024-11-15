@@ -1,5 +1,18 @@
-﻿@{
+﻿@using SharedDtoModels.TaskDtos;
+@model List<ToDoTaskDisplayDto>
+@{
     ViewData["Title"] = "Home Page";
+}
+@if(!Model.Any())
+{
+    <div>There are no Tasks</div>
+}else{
+    @foreach (ToDoTaskDisplayDto taskDisplay in Model)
+    {
+        <div>
+            <h1>@taskDisplay.Title</h1>
+        </div>
+    }
 }
 
 <div class="text-center">

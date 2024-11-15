@@ -9,6 +9,21 @@ namespace SimpleToDoAppWebMVC
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            // Add Http Client factory
+            builder.Services.AddHttpClient(
+                builder.Configuration["HttpClientName"] ?? throw new Exception("No HttpClient Name is available"),
+                client =>
+            {
+                string? uri;
+                if (builder.Environment.IsDevelopment())
+                    uri = builder.Configuration.GetConnectionString("LocalHttpClient");
+                else
+                    uri = builder.Configuration.GetConnectionString("AzureHttpClient");
+                if (uri == null)
+                    throw new Exception("No HttpClient available");
+                client.BaseAddress = new Uri(uri);
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

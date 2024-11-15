@@ -19,7 +19,7 @@ namespace SimpleToDoAppAPI.Controllers
         public async Task<IActionResult> GetAll()
         {
             var tasks = await _taskService.GetAllAsync();
-            if (!tasks.Any())
+            if (!tasks.Any() || true)
             {
                 return NotFound(new
                 {
@@ -27,11 +27,7 @@ namespace SimpleToDoAppAPI.Controllers
                 });
             }
 
-            return Ok(new
-            {
-                message = "Successfully retrieved tasks",
-                tasks
-            });
+            return Ok(tasks);
         }
     }
 }
