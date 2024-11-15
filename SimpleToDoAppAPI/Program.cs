@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using SimpleToDoAppAPI.Models;
+using SimpleToDoAppAPI.Services;
 
 namespace SimpleToDoAppAPI
 {
@@ -13,6 +16,16 @@ namespace SimpleToDoAppAPI
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            // DbContext Injection
+            if (builder.Environment.IsDevelopment())
+                builder.Services.AddDbContext<SimpleToDoAppDbContext>(options =>
+                    options.UseSqlServer(
+                        builder.Configuration.GetConnectionString("LocalDbConnection")));
+
+            // Add Services, which handles DB Operations
+            builder.Services.AddScoped<ICategoryService, CategoryService>();
+            builder.Services.AddScoped<ITaskService, TaskService>();
 
             var app = builder.Build();
 

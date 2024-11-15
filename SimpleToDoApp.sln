@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleToDoAppAPI", "SimpleToDoAppAPI\SimpleToDoAppAPI.csproj", "{1B80E75C-81F7-46AD-90E0-6B60E9A5A796}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleToDoAppAPI", "SimpleToDoAppAPI\SimpleToDoAppAPI.csproj", "{1B80E75C-81F7-46AD-90E0-6B60E9A5A796}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleToDoAppWebMVC", "SimpleToDoAppWebMVC\SimpleToDoAppWebMVC.csproj", "{0B66640B-3CDF-40CB-B129-E5A1B4D0AA3B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleToDoAppWebMVC", "SimpleToDoAppWebMVC\SimpleToDoAppWebMVC.csproj", "{0B66640B-3CDF-40CB-B129-E5A1B4D0AA3B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedDtoModels", "SharedDtoModels\SharedDtoModels.csproj", "{1409778B-DD18-448B-B14D-34C8F491FB7D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{0B66640B-3CDF-40CB-B129-E5A1B4D0AA3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B66640B-3CDF-40CB-B129-E5A1B4D0AA3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B66640B-3CDF-40CB-B129-E5A1B4D0AA3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1409778B-DD18-448B-B14D-34C8F491FB7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1409778B-DD18-448B-B14D-34C8F491FB7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1409778B-DD18-448B-B14D-34C8F491FB7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1409778B-DD18-448B-B14D-34C8F491FB7D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
