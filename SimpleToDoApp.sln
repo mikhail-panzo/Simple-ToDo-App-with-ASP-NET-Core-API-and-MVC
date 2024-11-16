@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleToDoAppAPI", "SimpleT
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleToDoAppWebMVC", "SimpleToDoAppWebMVC\SimpleToDoAppWebMVC.csproj", "{0B66640B-3CDF-40CB-B129-E5A1B4D0AA3B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedDtoModels", "SharedDtoModels\SharedDtoModels.csproj", "{1409778B-DD18-448B-B14D-34C8F491FB7D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedModels", "SharedModels\SharedModels.csproj", "{50BC7D5C-FD64-42E1-9BC7-6A2D8F8D7AB4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{0B66640B-3CDF-40CB-B129-E5A1B4D0AA3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B66640B-3CDF-40CB-B129-E5A1B4D0AA3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B66640B-3CDF-40CB-B129-E5A1B4D0AA3B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1409778B-DD18-448B-B14D-34C8F491FB7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1409778B-DD18-448B-B14D-34C8F491FB7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1409778B-DD18-448B-B14D-34C8F491FB7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1409778B-DD18-448B-B14D-34C8F491FB7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50BC7D5C-FD64-42E1-9BC7-6A2D8F8D7AB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50BC7D5C-FD64-42E1-9BC7-6A2D8F8D7AB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50BC7D5C-FD64-42E1-9BC7-6A2D8F8D7AB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50BC7D5C-FD64-42E1-9BC7-6A2D8F8D7AB4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

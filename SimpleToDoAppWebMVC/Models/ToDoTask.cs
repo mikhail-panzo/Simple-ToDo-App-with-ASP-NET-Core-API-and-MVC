@@ -1,4 +1,4 @@
-﻿using SharedDtoModels.TaskDtos;
+﻿using SharedModels.TaskDtos;
 
 namespace SimpleToDoAppWebMVC.Models
 {

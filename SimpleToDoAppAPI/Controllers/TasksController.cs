@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SharedModels.Responses;
+using SharedModels.TaskDtos;
 using SimpleToDoAppAPI.Services;
 
 namespace SimpleToDoAppAPI.Controllers
@@ -10,6 +12,7 @@ namespace SimpleToDoAppAPI.Controllers
     {
         private readonly ITaskService _taskService;
 
+        // Task service is used (This can only be available if registered in Program.cs)
         public TasksController(ITaskService taskService)
         {
             _taskService = taskService;
@@ -18,16 +21,18 @@ namespace SimpleToDoAppAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var tasks = await _taskService.GetAllAsync();
-            if (!tasks.Any() || true)
+            List<ToDoTaskDisplayWithIdDto>? tasks = await _taskService.GetAllAsync();
+
+            if (!tasks.Any())
             {
-                return NotFound(new
-                {
-                    message = "There are no tasks available"
-                });
+                return NotFound();
             }
 
-            return Ok(tasks);
+            return Ok(new DataResponse<List<ToDoTaskDisplayWithIdDto>>
+                {
+                    Message = "Tasks retrieved successfully.",
+                    Data = tasks
+                });
         }
     }
 }

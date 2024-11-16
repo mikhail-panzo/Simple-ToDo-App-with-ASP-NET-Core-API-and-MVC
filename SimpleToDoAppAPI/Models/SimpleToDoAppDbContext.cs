@@ -35,16 +35,16 @@ public partial class SimpleToDoAppDbContext : DbContext
             entity.HasKey(e => e.Id);
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.Name).HasMaxLength(50);
+            entity.HasIndex(u => u.Name).IsUnique();
         });
 
         modelBuilder.Entity<ToDoTask>(entity =>
         {
             entity.ToTable("Tasks"); // Added since the POCO has a different name
             entity.HasKey(e => e.Id).HasName("PK_Task");
-
             entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.Title).HasMaxLength(100);
-
+            entity.HasIndex(u => u.Title).IsUnique();
             entity.HasOne(d => d.Category).WithMany(p => p.Tasks)
                 .HasForeignKey(d => d.CategoryId)
                 .HasConstraintName("FK_Tasks_Categories");

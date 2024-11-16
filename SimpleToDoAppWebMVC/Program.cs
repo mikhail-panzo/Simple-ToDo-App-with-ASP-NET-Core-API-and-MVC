@@ -1,3 +1,5 @@
+using SimpleToDoAppWebMVC.Services;
+
 namespace SimpleToDoAppWebMVC
 {
     public class Program
@@ -9,18 +11,27 @@ namespace SimpleToDoAppWebMVC
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
-            // Add Http Client factory
-            builder.Services.AddHttpClient(
-                builder.Configuration["HttpClientName"] ?? throw new Exception("No HttpClient Name is available"),
-                client =>
+            /* Add Http Client factory
+             * These services are used to call the API
+             * A uri for the API is configured in appsettings.json
+             * Learn more from: https://learn.microsoft.com/en-us/dotnet/core/extensions/httpclient-factory#typed-clients
+             */
+
+            string? uri;
+            if (builder.Environment.IsDevelopment())
+                uri = builder.Configuration.GetConnectionString("LocalHttpClient");
+            else
+                uri = builder.Configuration.GetConnectionString("AzureHttpClient");
+            if (uri == null)
+                throw new Exception("No HttpClient available");
+
+            // Add the service handling categories
+            builder.Services.AddHttpClient<CategoryService>(client =>
+                {
+                    client.BaseAddress = new Uri(uri);
+                });
+            builder.Services.AddHttpClient<TaskService>(client =>
             {
-                string? uri;
-                if (builder.Environment.IsDevelopment())
-                    uri = builder.Configuration.GetConnectionString("LocalHttpClient");
-                else
-                    uri = builder.Configuration.GetConnectionString("AzureHttpClient");
-                if (uri == null)
-                    throw new Exception("No HttpClient available");
                 client.BaseAddress = new Uri(uri);
             });
 

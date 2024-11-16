@@ -1,4 +1,4 @@
-﻿using SharedDtoModels.TaskDtos;
+﻿using SharedModels.TaskDtos;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -42,6 +42,16 @@ public static class ToDoTaskExtensions
         return toDoTaskDisplayDto;
     }
 
+    public static ToDoTaskDisplayWithIdDto ToDisplayWithIdDto(this ToDoTask task) =>
+        new ToDoTaskDisplayWithIdDto()
+        {
+            Id = task.Id,
+            Title = task.Title,
+            Deadline = task.Deadline,
+            IsCompleted = task.IsCompleted,
+            CategoryName = task.Category == null ? "No Category" : task.Category.Name
+        };
+
     public static ToDoTaskDto ToDto(this ToDoTask task)
     {
         return new ToDoTaskDto()
@@ -51,8 +61,7 @@ public static class ToDoTaskExtensions
             Location = task.Location,
             ImageUrl = task.ImageUrl,
             Deadline = task.Deadline,
-            CategoryId = task.CategoryId,
-            IsCompleted = task.IsCompleted
+            CategoryId = task.CategoryId
         };
     }
 
@@ -65,8 +74,7 @@ public static class ToDoTaskExtensions
             Location = taskDto.Location,
             ImageUrl = taskDto.ImageUrl,
             Deadline = taskDto.Deadline,
-            CategoryId = taskDto.CategoryId,
-            IsCompleted = taskDto.IsCompleted
+            CategoryId = taskDto.CategoryId
         };
     }
 }

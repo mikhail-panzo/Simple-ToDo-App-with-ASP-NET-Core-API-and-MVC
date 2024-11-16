@@ -1,15 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SharedDtoModels.TaskDtos;
+using SharedModels.TaskDtos;
 using SimpleToDoAppAPI.Models;
 
 namespace SimpleToDoAppAPI.Services
 {
     public interface ITaskService
     {
-        Task<List<ToDoTaskDisplayDto>> GetAllAsync();
+        Task<List<ToDoTaskDisplayWithIdDto>> GetAllAsync();
     }
 
-    public class TaskService : ITaskService
+    public class TaskService : ITaskService, IDisposable
     {
         private readonly SimpleToDoAppDbContext _context;
 
@@ -18,10 +18,12 @@ namespace SimpleToDoAppAPI.Services
             _context = context;
         }
 
-        public async Task<List<ToDoTaskDisplayDto>> GetAllAsync()
+        public void Dispose() => _context.Dispose();
+
+        public async Task<List<ToDoTaskDisplayWithIdDto>> GetAllAsync()
         {
             List<ToDoTask> toDoTasks= await _context.ToDoTasks.Include(task => task.Category).ToListAsync<ToDoTask>();
-            return toDoTasks.Select(task => task.ToDisplayDto()).ToList();
+            return toDoTasks.Select(task => task.ToDisplayWithIdDto()).ToList();
         }
     }
 }
