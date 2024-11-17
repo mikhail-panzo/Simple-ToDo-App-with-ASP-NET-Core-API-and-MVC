@@ -4,6 +4,7 @@ using SharedModels.CategoryDtos;
 using SimpleToDoAppAPI.Services;
 using SharedModels.Responses;
 using Newtonsoft.Json;
+using SharedModels.TaskDtos;
 
 namespace SimpleToDoAppAPI.Controllers
 {
@@ -77,9 +78,10 @@ namespace SimpleToDoAppAPI.Controllers
             // Check if there are any elements queried at all
             if (!categories.Any())
             {
-                return NotFound(new MessageResponse
+                return NotFound(new DataResponse<List<CategoryWithIdDto>>
                 {
-                    Message = $"There are no categories."
+                    Message = $"There are no categories.",
+                    Data = null
                 });
             }
 
@@ -104,9 +106,10 @@ namespace SimpleToDoAppAPI.Controllers
             // If there is no existing category based on the id, return a not found request
             if (category == null)
             {
-                return NotFound(new MessageResponse
+                return NotFound(new DataResponse<CategoryWithIdDto>
                 {
-                    Message = $"Category with the ID of {id} does not exists."
+                    Message = $"Category with the ID of {id} does not exists.",
+                    Data = null
                 });
             }
 
@@ -132,18 +135,20 @@ namespace SimpleToDoAppAPI.Controllers
             // If there is no existing category based on the id, return a not found request
             if (existingCategory == null)
             {
-                return BadRequest(new MessageResponse
+                return StatusCode(498, new DataResponse<CategoryWithIdDto>
                 {
-                    Message = $"Category with the ID of {id} does not exists."
+                    Message = $"Category with the ID of {id} does not exists.",
+                    Data = null
                 });
             }
 
             // If the category being sent and the existing category is the same
             if (JsonConvert.SerializeObject(existingCategory.ToDto()) == JsonConvert.SerializeObject(category))
             {
-                return BadRequest(new MessageResponse
+                return StatusCode(497, new DataResponse<CategoryWithIdDto>
                 {
-                    Message = "Category being sent is not modified."
+                    Message = "Category being updated is not modified.",
+                    Data = null
                 });
             }
 
@@ -151,7 +156,7 @@ namespace SimpleToDoAppAPI.Controllers
             Category? conflictCategory = await _categoryService.GetByNameAsync(category.Name);
             if(conflictCategory != null)
             {
-                return BadRequest(new DataResponse<CategoryWithIdDto>
+                return StatusCode(496, new DataResponse<CategoryWithIdDto>
                 {
                     Message = "Category with the name already exists.",
                     Data = existingCategory.ToDtoWithId()
@@ -160,15 +165,17 @@ namespace SimpleToDoAppAPI.Controllers
 
             // Perform an update and check if it was successful
             if(await _categoryService.UpdateAsync(id, category))
-                return Ok(new MessageResponse
+                return Ok(new DataResponse<CategoryWithIdDto>
                 {
-                    Message = $"Category with the ID of {id} successfully updated."
+                    Message = $"Category with the ID of {id} successfully updated.",
+                    Data = null
                 });
 
             // If the update was unsuccessful and the existingCategory no longer exists
-            return NotFound(new MessageResponse
+            return NotFound(new DataResponse<CategoryWithIdDto>
             {
-                Message = "Concurrency Error: Category being updated does not exists during the update."
+                Message = "Concurrency Error: Category being updated does not exists during the update.",
+                Data = null
             });
         }
 
@@ -185,16 +192,30 @@ namespace SimpleToDoAppAPI.Controllers
             // If there is no existing category based on the id, return a not found request
             if (existingCategory == null)
             {
-                return BadRequest(new MessageResponse
+                return BadRequest(new DataResponse<List<ToDoTaskDisplayDto>>
                 {
-                    Message = $"Category with the ID of {id} does not exists."
+                    Message = $"Category with the ID of {id} does not exists.",
+                    Data = null
                 });
             }
 
+            // If there are tasks assigned to the category, return a bad request
+            // This type of validation should be done if an entity is a foreign key of another and has the constraint of not being deleted
+            if (_categoryService.TryGetTasks(id, out List<ToDoTaskDisplayDto> tasks))
+
+                // Set a custom status code for bad requests where a category has tasks
+                return StatusCode(499, new DataResponse<List<ToDoTaskDisplayDto>>
+                {
+                    Message = "Category has tasks assigned to it.",
+                    Data = tasks
+                });
+
             // If the category exists, delete it
             if(await _categoryService.DeleteAsync(existingCategory))
-                return Ok(new MessageResponse { 
-                    Message = $"Category with the ID of {id} deleted successfully."
+                return Ok(new DataResponse<List<ToDoTaskDisplayDto>>
+                { 
+                    Message = $"Category with the ID of {id} deleted successfully.",
+                    Data = null
                 });
 
             // If the model cannot be deleting

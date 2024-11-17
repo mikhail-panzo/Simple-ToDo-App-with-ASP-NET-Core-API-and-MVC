@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SharedModels.CategoryDtos;
+using SharedModels.TaskDtos;
 using SimpleToDoAppAPI.Models;
 using System.Linq;
 
@@ -15,6 +16,8 @@ namespace SimpleToDoAppAPI.Services
         Task<Category?> GetByIdAsync(long id);
 
         Task<Category?> GetByNameAsync(string name);
+
+        bool TryGetTasks(long id, out List<ToDoTaskDisplayDto> tasks);
 
         Task<bool> UpdateAsync(long id, CategoryDto newCategory);
 
@@ -74,6 +77,33 @@ namespace SimpleToDoAppAPI.Services
         /// <returns></returns>
         public async Task<Category?> GetByNameAsync(string name)
             => await _context.Categories.FirstOrDefaultAsync(c => c.Name == name);
+
+        /// <summary>
+        /// Try to get all tasks for a category, assuming a category exists
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="tasks"></param>
+        /// <returns></returns>
+        public bool TryGetTasks(long id, out List<ToDoTaskDisplayDto> tasks)
+        {
+            Category? category = _context.Categories.Find(id);
+
+            if (category == null) {
+                tasks = new List<ToDoTaskDisplayDto>();
+                return false;
+            }
+
+            List<ToDoTask> existingTasks = _context.ToDoTasks.Where(task => task.CategoryId == id).ToList<ToDoTask>();
+
+            if(!existingTasks.Any()) {
+                tasks = new List<ToDoTaskDisplayDto>();
+                return false;
+            }
+
+            tasks = existingTasks.Select(task => task.ToDisplayDto()).ToList();
+            return true;
+        }
+
 
         /// <summary>
         /// Updates an already existing category, returns true if saved but false if the item being saved no longer exists

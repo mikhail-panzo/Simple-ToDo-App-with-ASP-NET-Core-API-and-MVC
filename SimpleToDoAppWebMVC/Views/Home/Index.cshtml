@@ -4,6 +4,16 @@
     ViewData["Title"] = "";
 }
 
+@* Breadcrumb *@
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a class="text-decoration-none" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+        </ol>
+    </nav>
+</div>
+
+@* Header *@
 <h1 class="mb-3">Tasks</h1>
 
 <section class="container">
@@ -14,21 +24,35 @@
     @* Display Each task *@
     @foreach (ToDoTaskDisplayWithIdDto taskDisplay in Model)
     {
-            <div class="card mb-3">
-                <div class="card-body row">
-                <div class="col-1">
-                    <form>
-                        <input class="form-check-input" type="checkbox" id=@($"completeRadio{taskDisplay.Id}") @(taskDisplay.IsCompleted ? "checked" : "") />
-                    </form>
+        @* Check if task is overdue and get the deadline *@
+        bool isOverdue = taskDisplay.Deadline != null && taskDisplay.Deadline < DateTime.Now && !taskDisplay.IsCompleted;
+        DateTime deadline = taskDisplay.Deadline ?? DateTime.Now;
+
+        <div class="card mb-3 @(isOverdue ? "text-white bg-danger" : "")">
+            <div class="card-body row">
+                <div class="col-10 col-sm-11">
+                    <div class="row">
+                        <div class="col-1 text-end">
+                            <form>
+                                <input class="form-check-input fs-3" type="checkbox" id=@($"completeRadio{taskDisplay.Id}") @(taskDisplay.IsCompleted ? "checked" : "")>
+                            </form>
+                        </div>
+                        <div class="col-11 class-text">
+                            <h3 class="h6">Category: @Html.DisplayFor(model => taskDisplay.CategoryName)</h3>
+                            <h2 class="card-title h3">@Html.DisplayFor(model => taskDisplay.Title)</h2>
+                            @if (taskDisplay.Deadline != null)
+                            {
+                                <p>Deadline: @deadline.ToString("hh:mm tt, ddd (MMMM dd, yyyy)") @(isOverdue ? "(Overdue)" : "")</p>
+                            }
+                        </div>
+                    </div>
                 </div>
-                <div class="col-11">
-                    <h2 class="card-title h3">@Html.DisplayFor(model => taskDisplay.Title)</h2>
-                    @if (taskDisplay.Deadline != null)
-                    {
-                        <p class="card-text">Deadline: @Html.DisplayFor(model => taskDisplay.Deadline)</p>
-                    }
+                <div class="col-2 col-sm-1 d-flex flex-column justify-content-center align-items-center">
+                    <i class="fa-regular fa-pen-to-square fs-3 m-3"></i>
+                    <i class="fa-solid fa-trash fs-3 m-3"></i>
                 </div>
             </div>
+            
         </div>
     }
 }

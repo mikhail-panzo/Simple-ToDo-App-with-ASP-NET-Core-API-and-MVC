@@ -49,7 +49,7 @@ public static class ToDoTaskExtensions
             Title = task.Title,
             Deadline = task.Deadline,
             IsCompleted = task.IsCompleted,
-            CategoryName = task.Category == null ? "No Category" : task.Category.Name
+            CategoryName = task.Category == null ? "None" : task.Category.Name
         };
 
     public static ToDoTaskDto ToDto(this ToDoTask task)

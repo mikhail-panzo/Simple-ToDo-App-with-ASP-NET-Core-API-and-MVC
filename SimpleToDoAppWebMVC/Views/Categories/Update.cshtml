@@ -1,0 +1,65 @@
+﻿@using SharedModels.CategoryDtos;
+@model CategoryWithIdDto
+@{
+    ViewData["Title"] = "Create Category";
+    string bsLabel = "mb-1";
+}
+
+@* Breadcrumb *@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a class="text-decoration-none" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+        <li class="breadcrumb-item"><a class="text-decoration-none" asp-area="" asp-controller="Categories" asp-action="Index">Categories</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Update</li>
+    </ol>
+</nav>
+
+<h1 class="container mb-3">Create Category</h1>
+
+@* If there are errors, list them all *@
+@if (!ViewData.ModelState.IsValid || TempData["Errors"] != null)
+{
+    <div class="container alert alert-danger">
+        <ul class="m-0">
+            @if (!ViewData.ModelState.IsValid)
+            {
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(m => m.Errors))
+                {
+                    <li>@error.ErrorMessage</li>
+                }
+            }
+            @if (TempData["Errors"] != null)
+            {
+                @foreach (string error in TempData["Errors"] as string[])
+                {
+                    <li>@error</li>
+                }
+            }
+            
+        </ul>
+    </div>
+}
+
+<section class="container">
+    @* Form syntax for creating a new category, with CategoryDto as the model*@
+    <form asp-controller="Categories" asp-action="Update" method="post">
+        <div class="row justify-content-center mb-3">
+            <div class="col-12 col-sm-6">
+                    <div class="form-group">
+                        <label asp-for="Name" class=@bsLabel></label>
+                        <input asp-for="Name" type="text" class="form-control" id="name" name="name" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+            </div>
+            <div class="col-12 col-sm-6">
+                    <div class="form-group">
+                        <label asp-for="Summary" class=@bsLabel></label>
+                        <textarea asp-for="Summary" class="form-control" id="summary" name="summary" rows="1"></textarea>
+                        <span asp-validation-for="Summary" class="text-danger"></span>
+                    </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary mb-3">Create</button>
+        
+    </form>
+</section>

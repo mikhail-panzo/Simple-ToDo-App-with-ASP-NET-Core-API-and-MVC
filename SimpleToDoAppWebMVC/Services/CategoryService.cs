@@ -18,7 +18,7 @@ namespace SimpleToDoAppWebMVC.Services
 
         public void Dispose() => _httpClient?.Dispose();
 
-        public async Task<List<CategoryWithIdDto>> GetAllAsync()
+        public async Task<List<CategoryWithIdDto>?> GetAllAsync()
         {
             try
             {
@@ -26,15 +26,42 @@ namespace SimpleToDoAppWebMVC.Services
                     "Categories",
                     new JsonSerializerOptions(JsonSerializerDefaults.Web)))?.Data;
 
-                return categories ?? new List<CategoryWithIdDto>();
+                return categories;
             }
             catch (Exception ex)
             {
                 _logger.LogError("Error occured while getting all categories: {Error}", ex);
             }
 
-            return new List<CategoryWithIdDto>();
+            return null;
         }
 
+        public async Task<CategoryWithIdDto?> GetAsync(long id)
+        {
+            try
+            {
+                CategoryWithIdDto? category = (await _httpClient.GetFromJsonAsync<DataResponse<CategoryWithIdDto>>(
+                    $"Categories/{id}",
+                    new JsonSerializerOptions(JsonSerializerDefaults.Web)))?.Data;
+
+                return category;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error occured while getting the category: {Error}", ex);
+            }
+
+            return null;
+
+        }
+
+        public async Task<HttpResponseMessage> CreateAsync(CategoryDto categoryDto) =>
+            await _httpClient.PostAsJsonAsync("Categories", categoryDto);
+
+        public async Task<HttpResponseMessage> DeleteAsync(long id) =>
+            await _httpClient.DeleteAsync($"Categories/{id}");
+
+        public async Task<HttpResponseMessage> UpdateAsync(long id, CategoryDto categoryDto) =>
+            await _httpClient.PutAsJsonAsync($"Categories/{id}", categoryDto);
     }
 }

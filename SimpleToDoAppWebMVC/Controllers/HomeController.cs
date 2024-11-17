@@ -18,14 +18,10 @@ namespace SimpleToDoAppWebMVC.Controllers
             _taskService = taskService;
         }
 
+        // The index page is where you'll view all the tasks
         public async Task<IActionResult> Index()
         {
             return View(await _taskService.GetAllAsync());
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
